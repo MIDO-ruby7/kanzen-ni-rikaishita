@@ -6,10 +6,12 @@ import users from './controller/users'
 
 const app = new Hono()
 
-app.get('*', renderer)
+app.get('/*', renderer)
 
 app.route('/', static_pages)
 app.route('/posts', posts)
 app.route('/users', users)
+
+
 
 export default app

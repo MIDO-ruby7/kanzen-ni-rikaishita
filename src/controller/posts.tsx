@@ -1,6 +1,6 @@
 import { Hono } from 'hono'
 import type { Post } from '../models/post'
-import { Index } from '../pages/posts/index'
+import { Index } from '../views/posts/index'
 
 const app = new Hono()
 
