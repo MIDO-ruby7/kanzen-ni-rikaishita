@@ -2,7 +2,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite & npx tailwindcss -i public/static/application.tailwind.css -o dist/static/style.css --watch",
-    "build": "vite build",
+    "build": "vite build && npx tailwindcss -i public/static/application.tailwind.css -o dist/static/style.css",
     "preview": "wrangler pages dev dist",
     "deploy": "$npm_execpath run build && wrangler pages deploy dist"
   },
