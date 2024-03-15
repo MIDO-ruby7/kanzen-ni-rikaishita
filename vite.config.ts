@@ -8,6 +8,9 @@ export default defineConfig(async ({ command }) => {
   if (command === 'build') {
     return {
       plugins: [build()],
+      optimizeDeps: {
+        entries: [],
+      },
     }
   }
   const { env, dispose } = await getPlatformProxy()
