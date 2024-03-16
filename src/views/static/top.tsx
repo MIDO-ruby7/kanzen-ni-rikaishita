@@ -1,4 +1,8 @@
-export const Top = () => {
+interface TopProps {
+  googleClientId: string
+}
+
+export const Top = ({googleClientId}:  TopProps) => {
   return (
     <main>
       <section class="bg-top2 md:bg-top2 sm:bg-top-mobile bg-cover bg-no-repeat h-full w-screen">
@@ -23,11 +27,21 @@ export const Top = () => {
             <h2 class="text-xl font-bold mt-5">
               <span class="text-stone-800">理解のスタート地点から、進化を始めよう。</span>
             </h2>
-            <a href="/posts">
-              <button class="before:ease relative h-12 w-40 mt-10 ml-5 overflow-hidden border border-teal-500 bg-teal-500 text-white shadow-2xl transition-all before:absolute before:right-0 before:top-0 before:h-12 before:w-6 before:translate-x-12 before:rotate-6 before:bg-white before:opacity-10 before:duration-700 hover:shadow-teal-500 hover:before:-translate-x-40">
-                <span relative="relative z-10">START</span>
-              </button>
-            </a>
+            <script src="https://accounts.google.com/gsi/client" async defer></script>
+            <div id="g_id_onload"
+              data-client_id={googleClientId}
+              data-login_uri="http://localhost:3000/google/callback"
+              data-auto_prompt="false">
+            </div>
+            <div class="g_id_signin w-48 mt-10 ml-5"
+              data-type="standard"
+              data-size="large"
+              data-theme="outline"
+              data-text="sign_in_with"
+              data-shape="rectangular"
+              data-logo_alignment="left"
+            >
+            </div>
           </div>
         </div>
       </section>
