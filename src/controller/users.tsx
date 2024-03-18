@@ -1,13 +1,13 @@
 import { Hono } from 'hono'
 
-const app = new Hono()
+const user = new Hono()
 
-app.get('/', (c) => c.text('users index'))
-app.get('/:id', (c) => {
+user.get('/', (c) => c.text('users index'))
+user.get('/:id', (c) => {
   const id = c.req.param('id')
-  return c.text('Get app: ' + id)
+  return c.text('Get user: ' + id)
 })
-app.put('/', (c) => c.text('Update app'))
-app.delete('/', (c) => c.text('DELETE app'))
+user.put('/', (c) => c.text('Update user'))
+user.delete('/', (c) => c.text('DELETE user'))
 
-export default app
+export default user

@@ -2,7 +2,7 @@ import { Hono } from 'hono'
 import type { Post } from '../models/post'
 import { Index } from '../views/posts/index'
 
-const app = new Hono()
+const post = new Hono()
 
 const posts: Post[] = [
   { id: '1', title: 'Good Morning', body: 'Let us eat breakfast' },
@@ -19,19 +19,19 @@ const getPost = (id: string) => {
 }
 
 // index
-app.get('/', (c) => {
+post.get('/', (c) => {
   const posts = getPosts()
   return c.render(<Index posts={posts} />)
 })
 
-app.get('/:id', (c) => {
+post.get('/:id', (c) => {
   const id = c.req.param('id')
   const post = getPost(id)
   return c.html(<h1>post show</h1>)
 })
 
-app.post('/', (c) => c.text('Create post')) // POST /post
-app.put('/:id/edit', (c) => c.text('Update post')) // PUT /post
-app.delete('/:id', (c) => c.text('DELETE post')) // DELETE /post
+post.post('/', (c) => c.text('Create post')) // POST /post
+post.put('/:id/edit', (c) => c.text('Update post')) // PUT /post
+post.delete('/:id', (c) => c.text('DELETE post')) // DELETE /post
 
-export default app
+export default post
