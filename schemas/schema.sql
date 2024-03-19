@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS users;
 CREATE TABLE IF NOT EXISTS users (
   id TEXT PRIMARY KEY,
-  name TEXT NOT NULL,
+  name TEXT,
+  email TEXT NOT NULL,
   avatar TEXT
 );
