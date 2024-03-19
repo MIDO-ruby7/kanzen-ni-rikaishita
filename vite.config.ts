@@ -24,5 +24,8 @@ export default defineConfig(async ({ command }) => {
         },
       }),
     ],
+    server: {
+      logger: 'info',
+    },
   }
 })

@@ -14,23 +14,27 @@ login.use(
 )
 
 // Sign in with Google
-login.get('/callback', (c) => {
+login.get('/callback', async (c) => {
   const token = c.get('token')
-  const grantedScopes = c.get('granted-scopes')
   const user = c.get('user-google')
+  console.log('user', user)
+  console.log('token', token)
+  console.log('c.env.DB', c.env.DB)
+  console.log('c.env.DB.prepare', c.env.DB.prepare)
 
   if (user) {
-    try {
-      const existingUser = c.env.DB.prepare('SELECT * FROM users WHERE email = ?').bind(user.email).first()
-      if (!existingUser) {
-        c.env.DB.prepare('INSERT INTO users (email, name, avatar) VALUES (?, ?, ?)').bind(user.email, user.name, user.picture).run()
+    const existingUser = await c.env.DB.prepare('SELECT * FROM users WHERE email = ?').bind(user.email).all()
+    console.log('existingUser', existingUser)
+    console.log('!existingUser', !existingUser)
+      if (existingUser.results.length === 0) {
+        const uuid = crypto.randomUUID()
+        await c.env.DB.prepare('INSERT INTO users (id, email, name, avatar) VALUES (?, ?, ?, ?)').bind(uuid, user.email, user.name, user.picture).run()
+        return c.json({ message: 'User created', user: { id: uuid, email: user.email, name: user.name, avatar: user.picture } })
       }
       return c.redirect('/posts')
-    } catch (e) {
-      return c.json({ err: e }, 500)
-    }
   } else {
     return c.json({ error: 'User information not available' }, 400)
   }
 })
+
 export default login
