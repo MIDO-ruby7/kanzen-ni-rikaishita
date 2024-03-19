@@ -1,6 +1,9 @@
 import { Hono } from 'hono'
 import { googleAuth } from '@hono/oauth-providers/google'
 import type { Bindings } from '../bindings'
+import type { Session } from '../models/googleAuth'
+import { setUserIdCookieForSession } from '../models/googleAuth'
+import { User } from '../models/user'
 
 const login = new Hono<{ Bindings: Bindings }>()
 
@@ -17,21 +20,35 @@ login.use(
 login.get('/callback', async (c) => {
   const token = c.get('token')
   const user = c.get('user-google')
-  console.log('user', user)
-  console.log('token', token)
-  console.log('c.env.DB', c.env.DB)
-  console.log('c.env.DB.prepare', c.env.DB.prepare)
 
   if (user) {
+    // ユーザーが存在しない場合は新規作成
     const existingUser = await c.env.DB.prepare('SELECT * FROM users WHERE email = ?').bind(user.email).all()
-    console.log('existingUser', existingUser)
-    console.log('!existingUser', !existingUser)
-      if (existingUser.results.length === 0) {
-        const uuid = crypto.randomUUID()
-        await c.env.DB.prepare('INSERT INTO users (id, email, name, avatar) VALUES (?, ?, ?, ?)').bind(uuid, user.email, user.name, user.picture).run()
-        return c.json({ message: 'User created', user: { id: uuid, email: user.email, name: user.name, avatar: user.picture } })
-      }
+    if (existingUser.results.length === 0) {
+      const uuid = crypto.randomUUID()
+      await c.env.DB.prepare('INSERT INTO users (id, email, name, avatar) VALUES (?, ?, ?, ?)').bind(uuid, user.email, user.name, user.picture).run()
+
+      // クッキーにユーザー情報を保存
+      const session: Session = {
+        c: c,
+        userId: uuid,
+        maxAge: 60 * 60 * 24 * 90, // 90日間有効
+      };
+
+      setUserIdCookieForSession(session)
+
+      return c.redirect('/posts') // 後日ユーザー名変更画面に変更する
+    } else {
+
+      const session: Session = {
+        c: c,
+        userId: existingUser.results[0].id as string,
+        maxAge: 60 * 60 * 24 * 90, // 90日間有効
+      };
+      setUserIdCookieForSession(session)
+
       return c.redirect('/posts')
+    }
   } else {
     return c.json({ error: 'User information not available' }, 400)
   }
