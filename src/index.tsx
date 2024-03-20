@@ -1,4 +1,3 @@
-import 'dotenv/config'
 import { Hono } from 'hono'
 import { renderer } from './renderer'
 import staticPage from './controller/staticPages'
