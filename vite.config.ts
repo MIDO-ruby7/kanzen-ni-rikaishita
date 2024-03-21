@@ -10,12 +10,14 @@ export default defineConfig( async () => {
     plugins: [
       devServer({
         entry: 'src/index.tsx',
-        adapter: {
+        adapter:{
           env,
           onServerClose: dispose,
         },
       }),
-      build(),
+      build({
+        entry: 'src/index.tsx',
+      }),
     ],
   }
 })
