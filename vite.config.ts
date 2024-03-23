@@ -1,21 +1,28 @@
 import devServer from '@hono/vite-dev-server'
 import adapter from '@hono/vite-dev-server/cloudflare'
-import build from '@hono/vite-cloudflare-pages'
+import pagesBuild from '@hono/vite-cloudflare-pages'
 import { defineConfig } from 'vite'
 import { getPlatformProxy } from 'wrangler'
 
-export default defineConfig( async () => {
-  const { env } = await getPlatformProxy()
+export default defineConfig(async ({ mode, command }) => {
+  if (command === 'build') {
+    return {
+      plugins: [pagesBuild()]
+    }
+  }
+  const { env, dispose } = await getPlatformProxy()
   return {
     plugins: [
       devServer({
-        entry: 'src/index.tsx',
-        adapter,
         env,
+        adapter,
+        plugins: [
+          {
+            onServerClose: dispose
+          }
+        ]
       }),
-      build({
-        entry: 'src/index.tsx',
-      }),
-    ],
+      pagesBuild()
+    ]
   }
 })
