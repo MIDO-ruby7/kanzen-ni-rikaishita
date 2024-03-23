@@ -6,7 +6,7 @@ const staticPage = new Hono<{ Bindings: Bindings }>()
 
 staticPage .get('/top', (c) => {
   return c.render(
-    <Top googleClientId={process.env.GOOGLE_CLIENT_ID as string} />,
+    <Top googleClientId={process.env.VITE_GOOGLE_CLIENT_ID as string} />,
     {
       title: 'top',
     }

@@ -4,7 +4,7 @@ import pagesBuild from '@hono/vite-cloudflare-pages'
 import { defineConfig } from 'vite'
 import { getPlatformProxy } from 'wrangler'
 
-export default defineConfig(async ({ mode, command }) => {
+export default defineConfig(async ({ command }) => {
   if (command === 'build') {
     return {
       plugins: [pagesBuild()]
@@ -14,6 +14,7 @@ export default defineConfig(async ({ mode, command }) => {
   return {
     plugins: [
       devServer({
+        entry: 'src/index.tsx',
         env,
         adapter,
         plugins: [
@@ -22,7 +23,9 @@ export default defineConfig(async ({ mode, command }) => {
           }
         ]
       }),
-      pagesBuild()
+      pagesBuild({
+        entry: 'src/index.tsx',
+      }),
     ]
   }
 })

@@ -3,7 +3,7 @@ export type Bindings = {
   PASSWORD: string
   BLOG_EXAMPLE: KVNamespace
   DB: D1Database
-  GOOGLE_CLIENT_ID: string
+  VITE_GOOGLE_CLIENT_ID: string
 }
 
 declare global {
