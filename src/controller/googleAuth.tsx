@@ -3,15 +3,17 @@ import { googleAuth } from '@hono/oauth-providers/google'
 import type { Bindings } from '../bindings'
 import type { Session } from '../models/googleAuth'
 import { setUserIdCookieForSession } from '../models/googleAuth'
-import { User } from '../models/user'
+import { getPlatformProxy } from "wrangler";
+
+const { env } = await getPlatformProxy();
 
 const login = new Hono<{ Bindings: Bindings }>()
 
 login.use(
   '/*',
   googleAuth({
-    client_id: process.env.GOOGLE_CLIENT_ID,
-    client_secret: process.env.GOOGLE_CLIENT_SECRET,
+    client_id: env.GOOGLE_CLIENT_ID as string,
+    client_secret: env.GOOGLE_CLIENT_SECRET as string,
     scope: ['openid', 'email', 'profile'],
   })
 )
@@ -37,7 +39,7 @@ login.get('/callback', async (c) => {
 
       setUserIdCookieForSession(session)
 
-      return c.redirect('/posts') // 後日ユーザー名変更画面に変更する
+      return c.redirect('/posts') // FIXME:初回の画面遷移をユーザー名変更画面に
     } else {
 
       const session: Session = {
