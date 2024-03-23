@@ -4,7 +4,12 @@ import build from '@hono/vite-cloudflare-pages'
 import { defineConfig } from 'vite'
 import { getPlatformProxy } from 'wrangler'
 
-export default defineConfig( async () => {
+export default defineConfig(async ({ command }) => {
+  if (command === 'build') {
+    return {
+      plugins: [build()],
+    }
+  }
   const { env, dispose } = await getPlatformProxy()
   return {
     plugins: [
@@ -15,7 +20,9 @@ export default defineConfig( async () => {
           onServerClose: dispose,
         },
       }),
-      build(),
     ],
+    css: {
+      postcss: './postcss.config.ts',
+    },
   }
 })

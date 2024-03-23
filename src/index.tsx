@@ -12,7 +12,8 @@ app.get('/*', renderer)
 
 app.route('/', staticPage)
 app.route('/login', login)
-app.route('/posts', post)
 app.route('/users', user)
+app.route('/posts', post)
+
 
 export default app

@@ -2,8 +2,8 @@ import { Hono } from 'hono'
 import { googleAuth } from '@hono/oauth-providers/google'
 import type { Bindings } from '../bindings'
 import type { Session } from '../models/googleAuth'
+import { createUser } from '../models/user'
 import { setUserIdCookieForSession } from '../models/googleAuth'
-import { User } from '../models/user'
 
 const login = new Hono<{ Bindings: Bindings }>()
 
@@ -25,13 +25,14 @@ login.get('/callback', async (c) => {
     // ユーザーが存在しない場合は新規作成
     const existingUser = await c.env.DB.prepare('SELECT * FROM users WHERE email = ?').bind(user.email).all()
     if (existingUser.results.length === 0) {
-      const uuid = crypto.randomUUID()
-      await c.env.DB.prepare('INSERT INTO users (id, email, name, avatar) VALUES (?, ?, ?, ?)').bind(uuid, user.email, user.name, user.picture).run()
+
+      // ユーザー情報をDBに保存
+      const newUserId = await createUser(c.env.DB, user)
 
       // クッキーにユーザー情報を保存
       const session: Session = {
         c: c,
-        userId: uuid,
+        userId: newUserId.id,
         maxAge: 60 * 60 * 24 * 90, // 90日間有効
       };
 
