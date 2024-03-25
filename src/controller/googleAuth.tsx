@@ -9,8 +9,8 @@ const login = new Hono<{ Bindings: Bindings }>()
 login.use(
   '/*',
   googleAuth({
-    client_id: process.env.GOOGLE_CLIENT_ID as string,
-    client_secret: process.env.GOOGLE_CLIENT_SECRET as string,
+    client_id: import.meta.env.GOOGLE_CLIENT_ID,
+    client_secret: import.meta.env.GOOGLE_CLIENT_SECRET,
     scope: ['openid', 'email', 'profile'],
   })
 )

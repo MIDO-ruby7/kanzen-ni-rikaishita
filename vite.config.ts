@@ -7,7 +7,10 @@ import { getPlatformProxy } from 'wrangler'
 export default defineConfig(async ({ command }) => {
   if (command === 'build') {
     return {
-      plugins: [pagesBuild()]
+      plugins: [pagesBuild()],
+      define: {
+        'import.meta.env.VITE_GOOGLE_CLIENT_ID': JSON.stringify(process.env.VITE_GOOGLE_CLIENT_ID),
+      },
     }
   } else {
     const { env, dispose } = await getPlatformProxy();
