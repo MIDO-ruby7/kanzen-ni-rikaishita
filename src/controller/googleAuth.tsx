@@ -3,17 +3,14 @@ import { googleAuth } from '@hono/oauth-providers/google'
 import type { Bindings } from '../bindings'
 import type { Session } from '../models/googleAuth'
 import { setUserIdCookieForSession } from '../models/googleAuth'
-import { getPlatformProxy } from "wrangler";
-
-const { env } = await getPlatformProxy();
 
 const login = new Hono<{ Bindings: Bindings }>()
 
 login.use(
   '/*',
   googleAuth({
-    client_id: env.GOOGLE_CLIENT_ID as string,
-    client_secret: env.GOOGLE_CLIENT_SECRET as string,
+    client_id: process.env.GOOGLE_CLIENT_ID as string,
+    client_secret: process.env.GOOGLE_CLIENT_SECRET as string,
     scope: ['openid', 'email', 'profile'],
   })
 )
