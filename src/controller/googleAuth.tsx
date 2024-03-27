@@ -9,8 +9,8 @@ const login = new Hono<{ Bindings: Bindings }>()
 login.use(
   '/*',
   googleAuth({
-    client_id: import.meta.env.GOOGLE_CLIENT_ID,
-    client_secret: import.meta.env.GOOGLE_CLIENT_SECRET,
+    client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+    client_secret: import.meta.env.VITE_GOOGLE_CLIENT_SECRET,
     scope: ['openid', 'email', 'profile'],
   })
 )
@@ -19,6 +19,8 @@ login.use(
 login.get('/callback', async (c) => {
   const token = c.get('token')
   const user = c.get('user-google')
+  console.log('Token:', token)
+  console.log('User:', user)
 
   if (user) {
     // ユーザーが存在しない場合は新規作成

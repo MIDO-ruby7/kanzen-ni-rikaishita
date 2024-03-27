@@ -10,6 +10,7 @@ export default defineConfig(async ({ command }) => {
       plugins: [pagesBuild()],
       define: {
         'import.meta.env.VITE_GOOGLE_CLIENT_ID': JSON.stringify(process.env.VITE_GOOGLE_CLIENT_ID),
+        'import.meta.env.VITE_GOOGLE_CLIENT_SECRET': JSON.stringify(process.env.VITE_GOOGLE_CLIENT_SECRET),
       },
     }
   } else {
