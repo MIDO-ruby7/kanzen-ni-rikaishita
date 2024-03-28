@@ -49,7 +49,7 @@ export const Top = ({googleClientId}:  TopProps) => {
               を登る
             </h1>
             <h2 class="w-full text-xl font-bold mt-5">
-              <span class="">ロードマップを実践して"完全に理解した"を目指す</span><br/>
+              <span class="">"完全に理解した"を目指す</span><br/>
               <span class="text-xs">※"完全に理解した"とは、「入門しただけでほぼ何も分かっていない」という意味のエンジニア用語</span>
             </h2>
           </div>

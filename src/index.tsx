@@ -10,9 +10,13 @@ const app = new Hono<{ Bindings: Bindings }>()
 
 app.get('/*', renderer)
 
+app.get('/', (c) => {
+  return c.redirect('/top')
+})
+
 app.route('/', staticPage)
 app.route('/login', login)
-app.route('/posts', post)
 app.route('/users', user)
+app.route('/posts', post)
 
 export default app

@@ -4,7 +4,7 @@ import type { Bindings } from '../bindings'
 
 const staticPage = new Hono<{ Bindings: Bindings }>()
 
-staticPage .get('/top', (c) => {
+staticPage.get('/top', (c) => {
   return c.render(
     <Top googleClientId={import.meta.env.VITE_GOOGLE_CLIENT_ID as string} />,
     {

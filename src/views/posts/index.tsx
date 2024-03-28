@@ -9,7 +9,7 @@ const List = (props: { post: Post }) => (
 export const Index = (props: { posts: Post[] }) => {
   return (
     <main>
-      <h2>Posts</h2>
+      <h2 class="text-2xl">間に合いませんでした！</h2>
       <ul>
         {props.posts.map((post) => (
           <List post={post} />

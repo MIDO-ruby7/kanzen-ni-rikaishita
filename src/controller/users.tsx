@@ -1,13 +1,21 @@
 import { Hono } from 'hono'
+import { Show } from '../views/users/show'
 
 const user = new Hono()
 
 user.get('/', (c) => c.text('users index'))
-user.get('/:id', (c) => {
-  const id = c.req.param('id')
-  return c.text('Get user: ' + id)
+
+user.get('/show', (c) => {
+  return c.render(<Show />,
+  {
+    title: 'user show',
+  })
 })
-user.put('/', (c) => c.text('Update user'))
-user.delete('/', (c) => c.text('DELETE user'))
+
+// user.put('/edit', (c) => {
+//   return c.render()
+// })
+
+user.delete('/:id', (c) => c.text('DELETE user'))
 
 export default user

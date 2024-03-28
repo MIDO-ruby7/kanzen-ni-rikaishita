@@ -5,11 +5,15 @@ import { Index } from '../views/posts/index'
 const post = new Hono()
 
 const posts: Post[] = [
-  { id: '1', title: 'Good Morning', body: 'Let us eat breakfast' },
-  { id: '2', title: 'Good Afternoon', body: 'Let us eat Lunch' },
-  { id: '3', title: 'Good Evening', body: 'Let us eat Dinner' },
-  { id: '4', title: 'Good Night', body: 'Let us drink Beer' },
-  { id: '5', title: 'こんにちは', body: '昼からビールを飲みます' }
+  { id: '1', title: 'Hono速い', body: 'Let us eat breakfast' },
+  { id: '2', title: 'Bun速い', body: 'Let us eat Lunch' },
+  { id: '3', title: 'Vite速い', body: 'Let us eat Dinner' },
+  { id: '4', title: 'HTMX炎上すな', body: 'Let us drink Beer' },
+  { id: '5', title: 'Cloudflare Pages is 何者....', body: '昼からビールを飲みます' },
+  { id: '6', title: '結局CSSが一番むずい', body: '昼からビールを飲みます' },
+  { id: '7', title: 'アプリ作るのめちゃくちゃ楽しかったあああああああ祭開催＆運営ほんとに有難うございます。', body: '昼からビールを飲みます' },
+  { id: '8', title: '審査員の皆さんも、参加者の皆さんもお疲れ様です！', body: '昼からビールを飲みます' },
+  { id: '9', title: 'Honoで開発するのめちゃ楽しいので引き続き作ろうと思います', body: '昼からビールを飲みます' },
 ]
 
 const getPosts = () => posts
