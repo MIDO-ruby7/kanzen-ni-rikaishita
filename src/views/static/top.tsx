@@ -6,7 +6,7 @@ export const Top = ({googleClientId}:  TopProps) => {
   return (
     <main>
       <section class="bg-top2 md:bg-top2 sm:bg-top-mobile bg-cover bg-no-repeat h-full w-screen">
-      <nav>
+        <nav>
           <ul class="flex justify-between text-xl py-8 px-8 md:px-48 ">
             <li>
             Mt. Stupid
@@ -30,18 +30,15 @@ export const Top = ({googleClientId}:  TopProps) => {
             <script src="https://accounts.google.com/gsi/client" async defer></script>
             <div id="g_id_onload"
               data-client_id={googleClientId}
-              data-login_uri="http://localhost:5173/login/callback"
-              data-auto_prompt="false">
-            </div>
+              data-login_uri="https://kanzen-ni-rikaishita.com/login/callback"
+              data-auto_prompt="false"></div>
             <div class="g_id_signin w-48 mt-10 ml-5"
               data-type="standard"
               data-size="large"
               data-theme="outline"
               data-text="sign_in_with"
               data-shape="rectangular"
-              data-logo_alignment="left"
-            >
-            </div>
+              data-logo_alignment="left"></div>
           </div>
         </div>
       </section>
