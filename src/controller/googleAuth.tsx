@@ -31,10 +31,14 @@ login.get('/callback', async (c) => {
       // ユーザー情報をDBに保存
       const newUserId = await createUser(c.env.DB, user)
 
+      if (!newUserId) {
+        return c.json({ error: 'Failed to create user' }, 500)
+      }
+
       // クッキーにユーザー情報を保存
       const session: Session = {
         c: c,
-        userId: newUserId.id,
+        userId: newUserId,
         maxAge: 60 * 60 * 24 * 90, // 90日間有効
       };
 

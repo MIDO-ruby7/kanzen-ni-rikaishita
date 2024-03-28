@@ -13,8 +13,12 @@ export const createUser = async (db: D1Database, user: Partial<GoogleUser>) => {
     .prepare('INSERT INTO users (id, email, name, avatar) VALUES (?, ?, ?, ?)')
     .bind(id, user.name, user.email, user.picture)
     .run()
-  const new_user = success
-  return new_user
+
+  if (success) {
+    return id // 新しいユーザーの ID を返す
+  } else {
+    return null
+  }
 }
 
 export const findAllUsers = async (db: D1Database) => {
