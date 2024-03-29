@@ -12,7 +12,7 @@ export const Top = ({googleClientId}:  TopProps) => {
             Mt. Stupid
             </li>
             <li>
-              <a href="https://github.com/Icesofty" target="_blank" rel="noopener noreferrer">What is Mt. Stupit?</a>
+              <a href="https://github.com/MIDO-ruby7/kanzen-ni-rikaishita" target="_blank" rel="noopener noreferrer">What is Mt. Stupit?</a>
             </li>
           </ul>
         </nav>
